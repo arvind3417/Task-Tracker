@@ -15,7 +15,7 @@ cd leap-assignment
 
 ### Docker
 ```bash
-docker network create infrastructure
+docker network create leap
 ```
 
 ```bash
