@@ -1,3 +1,11 @@
+
+### Technologies
+1) Nestjs
+2) MongoDB
+3) Docker
+4) Microservices
+
+
 ### Getting started
 
 
