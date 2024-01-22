@@ -5,7 +5,6 @@ import { UserService } from './services/user.service';
 import { IUser } from './interfaces/user.interface';
 import { IUserCreateResponse } from './interfaces/user-create-response.interface';
 import { IUserSearchResponse } from './interfaces/user-search-response.interface';
-import { IUserConfirmResponse } from './interfaces/user-confirm-response.interface';
 
 @Controller('user')
 export class UserController {
@@ -88,45 +87,7 @@ export class UserController {
     return result;
   }
 
-  @MessagePattern('user_confirm')
-  public async confirmUser(confirmParams: {
-    link: string;
-  }): Promise<IUserConfirmResponse> {
-    let result: IUserConfirmResponse;
-
-    if (confirmParams) {
-      const userLink = await this.userService.getUserLink(confirmParams.link);
-
-      if (userLink && userLink[0]) {
-        const userId = userLink[0].user_id;
-        await this.userService.updateUserById(userId, {
-          is_confirmed: true,
-        });
-        await this.userService.updateUserLinkById(userLink[0].id, {
-          is_used: true,
-        });
-        result = {
-          status: HttpStatus.OK,
-          message: 'user_confirm_success',
-          errors: null,
-        };
-      } else {
-        result = {
-          status: HttpStatus.NOT_FOUND,
-          message: 'user_confirm_not_found',
-          errors: null,
-        };
-      }
-    } else {
-      result = {
-        status: HttpStatus.BAD_REQUEST,
-        message: 'user_confirm_bad_request',
-        errors: null,
-      };
-    }
-
-    return result;
-  }
+ 
 
   @MessagePattern('user_create')
   public async createUser(userParams: IUser): Promise<IUserCreateResponse> {
@@ -153,9 +114,7 @@ export class UserController {
         try {
           userParams.is_confirmed = false;
           const createdUser = await this.userService.createUser(userParams);
-          const userLink = await this.userService.createUserLink(
-            createdUser.id,
-          );
+
           delete createdUser.password;
           result = {
             status: HttpStatus.CREATED,
@@ -168,12 +127,8 @@ export class UserController {
               to: createdUser.email,
               subject: 'Email confirmation',
               html: `<center>
-              <b>Hi there, please confirm your email to use Smoothday.</b><br>
-              Use the following link for this.<br>
-              <a href="${this.userService.getConfirmationLink(
-                userLink.link,
-              )}"><b>Confirm The Email</b></a>
-              </center>`,
+              <b>Hi there, please confirm your email.</b><br>`
+            
             })
             .toPromise();
         } catch (e) {

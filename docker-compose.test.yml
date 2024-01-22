@@ -34,16 +34,6 @@ services:
       - backend
     ports:
       - ${MAILER_SERVICE_PORT}:${MAILER_SERVICE_PORT}
-  permission:
-    build: ./permission
-    # restart: always
-    hostname: permission
-    env_file:
-      - .env.test
-    networks:
-      - backend
-    ports:
-      - ${PERMISSION_SERVICE_PORT}:${PERMISSION_SERVICE_PORT}
   user:
     build: ./user
     # restart: always
@@ -71,6 +61,7 @@ services:
       - .env.test
     ports:
       - 27017:27017
+      
 networks:
   backend:
     driver: bridge
