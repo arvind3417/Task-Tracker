@@ -71,7 +71,6 @@ services:
       - .env.test
     ports:
       - 27017:27017
-      
 networks:
   backend:
     driver: bridge

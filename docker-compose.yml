@@ -6,17 +6,11 @@ services:
     hostname: gateway
     env_file:
       - .env
-    depends_on:
-      - task
-      - token
-      - mailer
-      - permission
-      - user
-      - db
     ports:
       - "8000:8000"
     networks:
       - backend
+      - frontend
   task:
     build: ./task
     # restart: always
@@ -25,13 +19,6 @@ services:
       - .env
     networks:
       - backend
-    depends_on:
-      - task
-      - token
-      - mailer
-      - permission
-      - user
-      - db
     links:
       - db
   token:
@@ -40,13 +27,6 @@ services:
     hostname: token
     env_file:
       - .env
-    depends_on:
-      - task
-      - token
-      - mailer
-      - permission
-      - user
-      - db
     networks:
       - backend
     links:
@@ -57,13 +37,6 @@ services:
     hostname: mailer
     env_file:
       - .env
-    depends_on:
-      - task
-      - token
-      - mailer
-      - permission
-      - user
-      - db
     networks:
       - backend
   permission:
@@ -72,13 +45,6 @@ services:
     hostname: permission
     env_file:
       - .env
-    depends_on:
-      - task
-      - token
-      - mailer
-      - permission
-      - user
-      - db
     networks:
       - backend
   user:
@@ -87,16 +53,8 @@ services:
     hostname: user
     env_file:
       - .env
-    depends_on:
-      - task
-      - token
-      - mailer
-      - permission
-      - user
-      - db
     networks:
       - backend
-      
     links:
       - mailer
       - db
