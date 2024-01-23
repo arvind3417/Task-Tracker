@@ -1,4 +1,5 @@
 
+
 ### Technologies
 1) Nestjs
 2) MongoDB
@@ -38,7 +39,12 @@ docker-compose up -d
 ```bash
 docker-compose -f ./docker-compose.test.yml up -d
 ```
+### Documentation
 
+```
+Swagger
+http://localhost:8000/api
+```
 
 ### Architecture
 ![image](https://github.com/arvind3417/leap-assignment/assets/91880276/d22443a5-7d18-4be8-adc0-7148c09df8eb)
