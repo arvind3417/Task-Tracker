@@ -13,10 +13,10 @@
 
 ### clone
 ```bash
-git clone https://github.com/arvind3417/leap-assignment.git
+git clone https://github.com/arvind3417/Task-Tracker.git
 ```
 ```bash
-cd leap-assignment
+cd Task-Tracker
 ```
 
 
